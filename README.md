@@ -1,5 +1,7 @@
 # ja-pitch-accent
 
+![Example](docs/example.png)
+
 Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
 Completely vibe-coded. Use at your own discretion!
@@ -19,14 +21,16 @@ npx ja-pitch-accent 閉める
 To print HTML instead:
 
 ```sh
-npx ja-pitch-accent 閉める --html
+npx ja-pitch-accent 閉める --html | head -n 1
 ```
+
+When there are multiple dictionary entries, we print one per line. We use `head -n 1` in this example to only print the first.
 
 ## JavaScript API
 
 ### Installation
 
-```bash
+```sh
 npm install --save ja-pitch-accent
 ```
 
@@ -39,7 +43,7 @@ const matches = getJaPitchAccent('閉める', 'しめる');
 const html = formatJaPitchAccentHtml(matches[0]);
 ```
 
-`getJaPitchAccent(spelling, reading?)` returns an array of matches:
+`getJaPitchAccent(spelling, reading?)` takes a Japanese word, and optionally a `reading` to narrow the results to a specific reading. It returns an array of matches. The first match is usually the best.
 
 ```ts
 type JaPitchAccentMatch = {
@@ -50,7 +54,7 @@ type JaPitchAccentMatch = {
 };
 ```
 
-The first match is usually the best. `accent` is the pitch-accent downstep position counted in mora:
+`accent` is the pitch-accent downstep position counted in mora:
 
 - `0` means heiban.
 - `1` means atamadaka.
