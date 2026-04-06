@@ -4,7 +4,7 @@ import type { CharacterRenderer, JaPitchAccentMatch } from "./types.ts";
 const WRAPPER_CLASS_NAME = "ja-pitch-accent";
 const SEGMENT_CLASS_NAME = "ja-pitch-accent-segment";
 const BORDER_WIDTH_VARIABLE_NAME = "--ja-pitch-accent-border-width";
-const DEFAULT_BORDER_WIDTH = "1.5px";
+const DEFAULT_BORDER_WIDTH = "2px"; // 10ten uptream uses 1.5px, but it causes missing borders on iOS WebKit
 
 function escapeHtml(text: string): string {
   return text
