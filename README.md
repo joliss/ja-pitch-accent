@@ -1,6 +1,6 @@
 # ja-pitch-accent
 
-![Example](docs/example.png)
+<img src="docs/example.png" alt="HTML rendering example" width="200">
 
 Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
