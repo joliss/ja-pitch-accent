@@ -31,10 +31,11 @@ type PitchAccentMatch = {
 The dataset is generated, not manually copied. Rebuild it with:
 
 ```sh
+git submodule update --init --recursive
 pnpm run build-data
 ```
 
-By default that reads from `../10ten-ja-reader/data/words.ljson`, but you can also pass an explicit source path and output directory to `scripts/build-dataset.ts`.
+By default that reads from the vendored 10ten submodule at `vendor/10ten-ja-reader/data/words.ljson`, but you can also pass an explicit source path and output directory to `scripts/build-dataset.ts`.
 
 ## Browser use
 

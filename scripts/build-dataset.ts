@@ -23,15 +23,26 @@ function kanaToHiragana(input: string): string {
 }
 
 async function main() {
+  const defaultSourcePath = path.resolve(
+    process.cwd(),
+    'vendor/10ten-ja-reader/data/words.ljson'
+  );
   const sourcePath =
-    process.argv[2] ??
-    path.resolve(process.cwd(), '../10ten-ja-reader/data/words.ljson');
+    process.argv[2] ?? defaultSourcePath;
   const outputDir = process.argv[3] ?? path.resolve(process.cwd(), 'data');
   const outputDataPath = path.join(outputDir, 'pitch-accent.json');
   const legacyPaths = [
     path.join(outputDir, 'pitch-accent.idx'),
     path.join(outputDir, 'pitch-accent.ljson'),
   ];
+
+  if (!fs.existsSync(sourcePath)) {
+    throw new Error(
+      sourcePath === defaultSourcePath
+        ? 'Expected 10ten data at vendor/10ten-ja-reader/data/words.ljson. Run `git submodule update --init --recursive` first, or pass an explicit source path.'
+        : `Pitch accent source file not found: ${sourcePath}`
+    );
+  }
 
   await fs.promises.mkdir(outputDir, { recursive: true });
   await Promise.all(
