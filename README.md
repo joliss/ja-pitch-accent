@@ -35,7 +35,7 @@ When there are multiple dictionary entries, we print one per line. We use `head 
 ### Installation
 
 ```sh
-npm install --save ja-pitch-accent
+npm install ja-pitch-accent
 ```
 
 ### Usage
