@@ -22,7 +22,7 @@ type PitchAccentMatch = {
 };
 ```
 
-`accent` is the pitch-accent downstep position counted in mora:
+The first match is usually the best. `accent` is the pitch-accent downstep position counted in mora:
 
 - `0` means heiban.
 - `1` means atamadaka.
@@ -31,11 +31,9 @@ type PitchAccentMatch = {
 
 `formatPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
-`spelling` is used instead of `kanjiSpelling` because kana-only words are valid lookups too.
-
 ## Data
 
-The dataset is generated, not manually copied. Rebuild it with:
+To rebuild the dataset from 10ten, run:
 
 ```sh
 git submodule update --init --recursive
