@@ -12,19 +12,21 @@ function escapeHtml(text: string): string {
 
 function renderCharacters(
   text: string,
-  renderCharacter: CharacterRenderer
+  renderCharacter: CharacterRenderer,
+  startIndex: number
 ): string {
   return [...text]
-    .map((character, index) => renderCharacter(character, index))
+    .map((character, index) => renderCharacter(character, startIndex + index))
     .join('');
 }
 
 function renderSegment(
   text: string,
   renderCharacter: CharacterRenderer,
+  startIndex: number,
   extraStyle: string
 ): string {
-  return `<span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter)}</span>`;
+  return `<span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter, startIndex)}</span>`;
 }
 
 export function formatJaPitchAccentHtml(
@@ -33,6 +35,18 @@ export function formatJaPitchAccentHtml(
 ): string {
   const accent = match.accent;
   const moraCount = countMora(match.reading);
+  let characterIndex = 0;
+
+  const renderIndexedSegment = (text: string, extraStyle: string): string => {
+    const rendered = renderSegment(
+      text,
+      renderCharacter,
+      characterIndex,
+      extraStyle
+    );
+    characterIndex += [...text].length;
+    return rendered;
+  };
 
   if (accent === 0 || accent === 1) {
     const firstSegmentStyle =
@@ -45,18 +59,16 @@ export function formatJaPitchAccentHtml(
       accent === 1 ? 'border-bottom-width:1.5px;' : 'border-top-width:1.5px;';
 
     const parts = [
-      renderSegment(
+      renderIndexedSegment(
         moraSubstring(match.reading, 0, 1),
-        renderCharacter,
         firstSegmentStyle
       ),
     ];
 
     if (moraCount > 1) {
       parts.push(
-        renderSegment(
+        renderIndexedSegment(
           moraSubstring(match.reading, 1),
-          renderCharacter,
           remainderStyle
         )
       );
@@ -66,23 +78,20 @@ export function formatJaPitchAccentHtml(
   }
 
   const parts = [
-    renderSegment(
+    renderIndexedSegment(
       moraSubstring(match.reading, 0, 1),
-      renderCharacter,
       'border-bottom-width:1.5px;border-right-width:1.5px;'
     ),
-    renderSegment(
+    renderIndexedSegment(
       moraSubstring(match.reading, 1, accent),
-      renderCharacter,
       'border-top-width:1.5px;border-right-width:1.5px;'
     ),
   ];
 
   if (accent < moraCount) {
     parts.push(
-      renderSegment(
+      renderIndexedSegment(
         moraSubstring(match.reading, accent),
-        renderCharacter,
         'border-bottom-width:1.5px;'
       )
     );

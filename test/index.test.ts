@@ -60,6 +60,19 @@ test('formats binary pitch accent html and delegates character rendering', () =>
   assert.match(html, /<b data-index="0">し<\/b>/);
 });
 
+test('character callback index is global across pitch segments', () => {
+  assert.equal(
+    formatJaPitchAccentHtml(
+      {
+        accent: 2,
+        reading: 'しめる',
+      },
+      (character, index) => `<b data-index="${index}">${character}</b>`
+    ),
+    '<span style="display:inline-block;margin-bottom:0.25rem;"><span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;border-right-width:1.5px;"><b data-index="0">し</b></span><span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:1.5px;border-right-width:1.5px;"><b data-index="1">め</b></span><span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;"><b data-index="2">る</b></span></span>'
+  );
+});
+
 test('formats default binary pitch accent html verbatim', () => {
   assert.equal(
     formatJaPitchAccentHtml({
