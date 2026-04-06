@@ -8,10 +8,12 @@
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     "esModuleInterop": true,
+    "rewriteRelativeImportExtensions": true,
     "resolveJsonModule": true,
     "useDefineForClassFields": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["bin", "scripts", "src", "test"]
 }

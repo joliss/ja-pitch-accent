@@ -1,0 +1,58 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import { formatPitchAccentHtml, getPitchAccent } from '../src/index.ts';
+
+test('looks up a specific spelling and reading', () => {
+  assert.deepEqual(getPitchAccent('閉める', 'しめる'), [
+    {
+      accent: 2,
+      partOfSpeech: [],
+      reading: 'しめる',
+      spellings: ['閉める'],
+    },
+  ]);
+});
+
+test('returns multiple accent patterns when they exist', () => {
+  assert.deepEqual(getPitchAccent('明白', 'あからさま'), [
+    {
+      accent: 0,
+      partOfSpeech: [],
+      reading: 'あからさま',
+      spellings: ['明白'],
+    },
+    {
+      accent: 3,
+      partOfSpeech: [],
+      reading: 'あからさま',
+      spellings: ['明白'],
+    },
+  ]);
+});
+
+test('normalizes katakana input through hiragana lookup', () => {
+  assert.deepEqual(getPitchAccent('ティーシャツ'), [
+    {
+      accent: 0,
+      partOfSpeech: [],
+      reading: 'ティーシャツ',
+      spellings: ['Ｔシャツ'],
+    },
+  ]);
+});
+
+test('formats binary pitch accent html and delegates character rendering', () => {
+  const html = formatPitchAccentHtml(
+    {
+      accent: 2,
+      reading: 'しめる',
+    },
+    (character, index) => `<b data-index="${index}">${character}</b>`
+  );
+
+  assert.match(html, /display:inline-block/);
+  assert.match(html, /border-bottom-width:1\.5px;border-right-width:1\.5px/);
+  assert.match(html, /border-top-width:1\.5px;border-right-width:1\.5px/);
+  assert.match(html, /<b data-index="0">し<\/b>/);
+});

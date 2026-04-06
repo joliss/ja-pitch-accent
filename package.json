@@ -1,14 +1,25 @@
 {
   "name": "get-pitch-accent",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "main": "tsx bin/cli.ts",
-    "typecheck": "tsc"
+  "description": "Pitch accent lookup and HTML formatting extracted from 10ten Japanese Reader",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": "./dist/src/index.js"
   },
-  "keywords": [],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && cp -R data dist/",
+    "build-data": "node --experimental-strip-types scripts/build-dataset.ts",
+    "main": "node --experimental-strip-types bin/cli.ts",
+    "test": "node --experimental-strip-types --test test/**/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "japanese",
+    "pitch-accent",
+    "kana",
+    "dictionary"
+  ],
   "author": "Jo Liss",
   "license": "GPL-3.0-only",
   "type": "module",
@@ -16,8 +27,14 @@
     "node": "24.14.1"
   },
   "bin": {
-    "get-pitch-accent": "bin/cli.ts"
+    "get-pitch-accent": "./dist/bin/cli.js"
   },
+  "files": [
+    "data",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "devDependencies": {
     "@types/node": "^25.5.2",
     "tsx": "^4.21.0",
