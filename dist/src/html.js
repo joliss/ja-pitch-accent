@@ -15,7 +15,7 @@ function renderCharacters(text, renderCharacter) {
 function renderSegment(text, renderCharacter, extraStyle) {
     return `<span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter)}</span>`;
 }
-export function formatPitchAccentHtml(match, renderCharacter = (character) => escapeHtml(character)) {
+export function formatJaPitchAccentHtml(match, renderCharacter = (character) => escapeHtml(character)) {
     const accent = match.accent;
     const moraCount = countMora(match.reading);
     if (accent === 0 || accent === 1) {

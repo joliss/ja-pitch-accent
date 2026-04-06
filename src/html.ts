@@ -1,5 +1,5 @@
 import { countMora, moraSubstring } from './normal-jp.ts';
-import type { CharacterRenderer, PitchAccentMatch } from './types.ts';
+import type { CharacterRenderer, JaPitchAccentMatch } from './types.ts';
 
 function escapeHtml(text: string): string {
   return text
@@ -27,8 +27,8 @@ function renderSegment(
   return `<span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter)}</span>`;
 }
 
-export function formatPitchAccentHtml(
-  match: Pick<PitchAccentMatch, 'accent' | 'reading'>,
+export function formatJaPitchAccentHtml(
+  match: Pick<JaPitchAccentMatch, 'accent' | 'reading'>,
   renderCharacter: CharacterRenderer = (character) => escapeHtml(character)
 ): string {
   const accent = match.accent;

@@ -1,7 +1,7 @@
-export { formatPitchAccentHtml } from './html.ts';
-export { getPitchAccent } from './lookup.ts';
+export { formatJaPitchAccentHtml } from './html.ts';
+export { getJaPitchAccent } from './lookup.ts';
 export type {
   AccentPattern,
   CharacterRenderer,
-  PitchAccentMatch,
+  JaPitchAccentMatch,
 } from './types.ts';

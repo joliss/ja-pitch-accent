@@ -27,7 +27,7 @@ function dedupeMatches(matches) {
     }
     return result;
 }
-export function getPitchAccent(spelling, reading) {
+export function getJaPitchAccent(spelling, reading) {
     const normalizedSpelling = kanaToHiragana(spelling);
     const normalizedReading = typeof reading === 'string' ? kanaToHiragana(reading) : undefined;
     const results = [];

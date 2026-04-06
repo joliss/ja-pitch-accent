@@ -2,7 +2,7 @@ export interface AccentPattern {
     i: number;
     pos?: Array<string>;
 }
-export interface PitchAccentMatch {
+export interface JaPitchAccentMatch {
     accent: number;
     partOfSpeech: Array<string>;
     reading: string;

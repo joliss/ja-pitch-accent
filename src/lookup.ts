@@ -1,6 +1,6 @@
 import { lookupEntries } from './data-store.ts';
 import { kanaToHiragana } from './normal-jp.ts';
-import type { AccentPattern, PitchAccentMatch } from './types.ts';
+import type { AccentPattern, JaPitchAccentMatch } from './types.ts';
 
 function exactMatchIndexes(
   values: Array<string> | undefined,
@@ -22,10 +22,10 @@ function toAccentPatterns(
 }
 
 function dedupeMatches(
-  matches: Array<PitchAccentMatch>
-): Array<PitchAccentMatch> {
+  matches: Array<JaPitchAccentMatch>
+): Array<JaPitchAccentMatch> {
   const seen = new Set<string>();
-  const result: Array<PitchAccentMatch> = [];
+  const result: Array<JaPitchAccentMatch> = [];
 
   for (const match of matches) {
     const key = JSON.stringify([
@@ -46,14 +46,14 @@ function dedupeMatches(
   return result;
 }
 
-export function getPitchAccent(
+export function getJaPitchAccent(
   spelling: string,
   reading?: string
-): Array<PitchAccentMatch> {
+): Array<JaPitchAccentMatch> {
   const normalizedSpelling = kanaToHiragana(spelling);
   const normalizedReading =
     typeof reading === 'string' ? kanaToHiragana(reading) : undefined;
-  const results: Array<PitchAccentMatch> = [];
+  const results: Array<JaPitchAccentMatch> = [];
 
   for (const entry of lookupEntries(spelling)) {
     const matchingSpellingIndexes = exactMatchIndexes(entry.k, normalizedSpelling);

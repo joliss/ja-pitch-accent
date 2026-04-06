@@ -1,10 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { formatPitchAccentHtml, getPitchAccent } from '../src/index.ts';
+import {
+  formatJaPitchAccentHtml,
+  getJaPitchAccent,
+} from '../src/index.ts';
 
 test('looks up a specific spelling and reading', () => {
-  assert.deepEqual(getPitchAccent('閉める', 'しめる'), [
+  assert.deepEqual(getJaPitchAccent('閉める', 'しめる'), [
     {
       accent: 2,
       partOfSpeech: [],
@@ -15,7 +18,7 @@ test('looks up a specific spelling and reading', () => {
 });
 
 test('returns multiple accent patterns when they exist', () => {
-  assert.deepEqual(getPitchAccent('明白', 'あからさま'), [
+  assert.deepEqual(getJaPitchAccent('明白', 'あからさま'), [
     {
       accent: 0,
       partOfSpeech: [],
@@ -32,7 +35,7 @@ test('returns multiple accent patterns when they exist', () => {
 });
 
 test('normalizes katakana input through hiragana lookup', () => {
-  assert.deepEqual(getPitchAccent('ティーシャツ'), [
+  assert.deepEqual(getJaPitchAccent('ティーシャツ'), [
     {
       accent: 0,
       partOfSpeech: [],
@@ -43,7 +46,7 @@ test('normalizes katakana input through hiragana lookup', () => {
 });
 
 test('formats binary pitch accent html and delegates character rendering', () => {
-  const html = formatPitchAccentHtml(
+  const html = formatJaPitchAccentHtml(
     {
       accent: 2,
       reading: 'しめる',
@@ -59,7 +62,7 @@ test('formats binary pitch accent html and delegates character rendering', () =>
 
 test('formats default binary pitch accent html verbatim', () => {
   assert.equal(
-    formatPitchAccentHtml({
+    formatJaPitchAccentHtml({
       accent: 2,
       reading: 'しめる',
     }),

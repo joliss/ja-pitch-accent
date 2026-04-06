@@ -1,2 +1,2 @@
-import type { PitchAccentMatch } from './types.ts';
-export declare function getPitchAccent(spelling: string, reading?: string): Array<PitchAccentMatch>;
+import type { JaPitchAccentMatch } from './types.ts';
+export declare function getJaPitchAccent(spelling: string, reading?: string): Array<JaPitchAccentMatch>;

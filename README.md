@@ -1,20 +1,20 @@
-# get-pitch-accent
+# ja-pitch-accent
 
 Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
 The package ships a generated JSON dataset derived from 10ten snapshot data and exposes a lookup API:
 
 ```ts
-import { formatPitchAccentHtml, getPitchAccent } from 'get-pitch-accent';
+import { formatJaPitchAccentHtml, getJaPitchAccent } from 'ja-pitch-accent';
 
-const matches = getPitchAccent('閉める', 'しめる');
-const html = formatPitchAccentHtml(matches[0]);
+const matches = getJaPitchAccent('閉める', 'しめる');
+const html = formatJaPitchAccentHtml(matches[0]);
 ```
 
-`getPitchAccent(spelling, reading?)` returns an array of matches:
+`getJaPitchAccent(spelling, reading?)` returns an array of matches:
 
 ```ts
-type PitchAccentMatch = {
+type JaPitchAccentMatch = {
   accent: number;
   partOfSpeech: string[];
   reading: string;
@@ -29,7 +29,7 @@ The first match is usually the best. `accent` is the pitch-accent downstep posit
 - `2` or greater means the pitch drops after that mora.
 - If `accent === mora count`, the pattern is odaka.
 
-`formatPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
+`formatJaPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
 ## Data
 
