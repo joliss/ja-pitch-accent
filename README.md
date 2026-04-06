@@ -1,6 +1,10 @@
 # ja-pitch-accent
 
-<img src="docs/example.png" alt="HTML rendering example" width="200">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/example-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/example-light.png">
+  <img src="docs/example-light.png" alt="HTML rendering example" width="200">
+</picture>
 
 Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
