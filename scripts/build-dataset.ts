@@ -27,19 +27,33 @@ async function main() {
     process.argv[2] ??
     path.resolve(process.cwd(), '../10ten-ja-reader/data/words.ljson');
   const outputDir = process.argv[3] ?? path.resolve(process.cwd(), 'data');
-  const outputDataPath = path.join(outputDir, 'pitch-accent.ljson');
-  const outputIndexPath = path.join(outputDir, 'pitch-accent.idx');
+  const outputDataPath = path.join(outputDir, 'pitch-accent.json');
+  const legacyPaths = [
+    path.join(outputDir, 'pitch-accent.idx'),
+    path.join(outputDir, 'pitch-accent.ljson'),
+  ];
 
   await fs.promises.mkdir(outputDir, { recursive: true });
+  await Promise.all(
+    legacyPaths.map((legacyPath) =>
+      fs.promises.rm(legacyPath, { force: true })
+    )
+  );
 
   const lineReader = readline.createInterface({
     input: fs.createReadStream(sourcePath),
     crlfDelay: Infinity,
   });
 
-  const dataStream = fs.createWriteStream(outputDataPath);
   const index = new Map<string, Array<number>>();
-  let offset = 0;
+  const entries: Array<{
+    k?: Array<string>;
+    r: Array<string>;
+    rm: Array<{
+      a: number | Array<{ i: number; pos?: Array<string> }>;
+      app?: number;
+    }>;
+  }> = [];
 
   for await (const line of lineReader) {
     const entry = JSON.parse(line) as {
@@ -81,33 +95,31 @@ async function main() {
       continue;
     }
 
-    const reducedEntry = JSON.stringify({
+    const reducedEntry = {
       ...(entry.k ? { k: entry.k } : {}),
       r: readings,
       rm: readingMeta,
-    });
-
-    dataStream.write(`${reducedEntry}\n`);
+    };
+    entries.push(reducedEntry);
+    const entryIndex = entries.length - 1;
 
     const keys = new Set([...(entry.k ?? []), ...readings].map(kanaToHiragana));
     for (const key of keys) {
-      index.set(key, [...(index.get(key) ?? []), offset]);
+      index.set(key, [...(index.get(key) ?? []), entryIndex]);
     }
-
-    offset += reducedEntry.length + 1;
   }
 
-  await new Promise<void>((resolve, reject) => {
-    dataStream.on('error', reject);
-    dataStream.end(() => resolve());
-  });
+  const sortedIndex = Object.fromEntries(
+    [...index.keys()]
+      .sort()
+      .map((key) => [key, index.get(key)!])
+  );
 
-  const sortedKeys = [...index.keys()].sort();
-  const indexContents = sortedKeys
-    .map((key) => `${key},${index.get(key)!.join(',')}`)
-    .join('\n');
-
-  await fs.promises.writeFile(outputIndexPath, `${indexContents}\n`, 'utf8');
+  await fs.promises.writeFile(
+    outputDataPath,
+    `${JSON.stringify({ entries, index: sortedIndex })}\n`,
+    'utf8'
+  );
 }
 
 await main();
