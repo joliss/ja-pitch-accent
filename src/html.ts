@@ -1,6 +1,9 @@
 import { countMora, moraSubstring } from './normal-jp.ts';
 import type { CharacterRenderer, JaPitchAccentMatch } from './types.ts';
 
+const WRAPPER_CLASS_NAME = 'ja-pitch-accent';
+const SEGMENT_CLASS_NAME = 'ja-pitch-accent-segment';
+
 function escapeHtml(text: string): string {
   return text
     .replaceAll('&', '&amp;')
@@ -24,9 +27,10 @@ function renderSegment(
   text: string,
   renderCharacter: CharacterRenderer,
   startIndex: number,
-  extraStyle: string
+  extraStyle: string,
+  modifierClassName: string
 ): string {
-  return `<span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter, startIndex)}</span>`;
+  return `<span class="${SEGMENT_CLASS_NAME} ${modifierClassName}" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter, startIndex)}</span>`;
 }
 
 export function formatJaPitchAccentHtml(
@@ -37,31 +41,54 @@ export function formatJaPitchAccentHtml(
   const moraCount = countMora(match.reading);
   let characterIndex = 0;
 
-  const renderIndexedSegment = (text: string, extraStyle: string): string => {
+  const renderIndexedSegment = (
+    text: string,
+    extraStyle: string,
+    modifierClassName: string
+  ): string => {
     const rendered = renderSegment(
       text,
       renderCharacter,
       characterIndex,
-      extraStyle
+      extraStyle,
+      modifierClassName
     );
     characterIndex += [...text].length;
     return rendered;
   };
 
   if (accent === 0 || accent === 1) {
-    const firstSegmentStyle =
+    const firstSegment =
       accent === 1
-        ? 'border-top-width:1.5px;border-right-width:1.5px;'
+        ? {
+            modifierClassName: 'ja-pitch-accent-segment-top-right',
+            style: 'border-top-width:1.5px;border-right-width:1.5px;',
+          }
         : moraCount > 1
-          ? 'border-bottom-width:1.5px;border-right-width:1.5px;'
-          : 'border-top-width:1.5px;';
-    const remainderStyle =
-      accent === 1 ? 'border-bottom-width:1.5px;' : 'border-top-width:1.5px;';
+          ? {
+              modifierClassName: 'ja-pitch-accent-segment-bottom-right',
+              style: 'border-bottom-width:1.5px;border-right-width:1.5px;',
+            }
+          : {
+              modifierClassName: 'ja-pitch-accent-segment-top',
+              style: 'border-top-width:1.5px;',
+            };
+    const remainderSegment =
+      accent === 1
+        ? {
+            modifierClassName: 'ja-pitch-accent-segment-bottom',
+            style: 'border-bottom-width:1.5px;',
+          }
+        : {
+            modifierClassName: 'ja-pitch-accent-segment-top',
+            style: 'border-top-width:1.5px;',
+          };
 
     const parts = [
       renderIndexedSegment(
         moraSubstring(match.reading, 0, 1),
-        firstSegmentStyle
+        firstSegment.style,
+        firstSegment.modifierClassName
       ),
     ];
 
@@ -69,22 +96,25 @@ export function formatJaPitchAccentHtml(
       parts.push(
         renderIndexedSegment(
           moraSubstring(match.reading, 1),
-          remainderStyle
+          remainderSegment.style,
+          remainderSegment.modifierClassName
         )
       );
     }
 
-    return `<span style="display:inline-block;margin-bottom:0.25rem;">${parts.join('')}</span>`;
+    return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join('')}</span>`;
   }
 
   const parts = [
     renderIndexedSegment(
       moraSubstring(match.reading, 0, 1),
-      'border-bottom-width:1.5px;border-right-width:1.5px;'
+      'border-bottom-width:1.5px;border-right-width:1.5px;',
+      'ja-pitch-accent-segment-bottom-right'
     ),
     renderIndexedSegment(
       moraSubstring(match.reading, 1, accent),
-      'border-top-width:1.5px;border-right-width:1.5px;'
+      'border-top-width:1.5px;border-right-width:1.5px;',
+      'ja-pitch-accent-segment-top-right'
     ),
   ];
 
@@ -92,10 +122,11 @@ export function formatJaPitchAccentHtml(
     parts.push(
       renderIndexedSegment(
         moraSubstring(match.reading, accent),
-        'border-bottom-width:1.5px;'
+        'border-bottom-width:1.5px;',
+        'ja-pitch-accent-segment-bottom'
       )
     );
   }
 
-  return `<span style="display:inline-block;margin-bottom:0.25rem;">${parts.join('')}</span>`;
+  return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join('')}</span>`;
 }
