@@ -8,9 +8,10 @@
     ".": "./dist/src/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && cp -R data dist/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -R data dist/",
     "build-data": "node --experimental-strip-types scripts/build-dataset.ts",
     "main": "node --experimental-strip-types bin/cli.ts",
+    "prepack": "pnpm run build",
     "test": "node --experimental-strip-types --test test/**/*.test.ts",
     "typecheck": "tsc -p tsconfig.json"
   },
@@ -30,7 +31,6 @@
     "get-pitch-accent": "./dist/bin/cli.js"
   },
   "files": [
-    "data",
     "dist",
     "LICENSE",
     "NOTICE",
