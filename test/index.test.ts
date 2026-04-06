@@ -59,9 +59,16 @@ test('formats binary pitch accent html and delegates character rendering', () =>
     html,
     /class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom-right"/
   );
+  assert.match(html, /--ja-pitch-accent-border-width:1\.5px/);
   assert.match(html, /display:inline-block/);
-  assert.match(html, /border-bottom-width:1\.5px;border-right-width:1\.5px/);
-  assert.match(html, /border-top-width:1\.5px;border-right-width:1\.5px/);
+  assert.match(
+    html,
+    /border-bottom-width:var\(--ja-pitch-accent-border-width\);border-right-width:var\(--ja-pitch-accent-border-width\);/
+  );
+  assert.match(
+    html,
+    /border-top-width:var\(--ja-pitch-accent-border-width\);border-right-width:var\(--ja-pitch-accent-border-width\);/
+  );
   assert.match(html, /<b data-index="0">し<\/b>/);
 });
 
@@ -74,7 +81,7 @@ test('character callback index is global across pitch segments', () => {
       },
       (character, index) => `<b data-index="${index}">${character}</b>`
     ),
-    '<span class="ja-pitch-accent" style="display:inline-block;margin-bottom:0.25rem;"><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;border-right-width:1.5px;"><b data-index="0">し</b></span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-top-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:1.5px;border-right-width:1.5px;"><b data-index="1">め</b></span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;"><b data-index="2">る</b></span></span>'
+    '<span class="ja-pitch-accent" style="--ja-pitch-accent-border-width:1.5px;display:inline-block;margin-bottom:0.25rem;"><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:var(--ja-pitch-accent-border-width);border-right-width:var(--ja-pitch-accent-border-width);"><b data-index="0">し</b></span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-top-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:var(--ja-pitch-accent-border-width);border-right-width:var(--ja-pitch-accent-border-width);"><b data-index="1">め</b></span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:var(--ja-pitch-accent-border-width);"><b data-index="2">る</b></span></span>'
   );
 });
 
@@ -84,6 +91,6 @@ test('formats default binary pitch accent html verbatim', () => {
       accent: 2,
       reading: 'しめる',
     }),
-    '<span class="ja-pitch-accent" style="display:inline-block;margin-bottom:0.25rem;"><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;border-right-width:1.5px;">し</span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-top-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:1.5px;border-right-width:1.5px;">め</span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;">る</span></span>'
+    '<span class="ja-pitch-accent" style="--ja-pitch-accent-border-width:1.5px;display:inline-block;margin-bottom:0.25rem;"><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:var(--ja-pitch-accent-border-width);border-right-width:var(--ja-pitch-accent-border-width);">し</span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-top-right" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:var(--ja-pitch-accent-border-width);border-right-width:var(--ja-pitch-accent-border-width);">め</span><span class="ja-pitch-accent-segment ja-pitch-accent-segment-bottom" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:var(--ja-pitch-accent-border-width);">る</span></span>'
   );
 });
