@@ -1,8 +1,8 @@
 # get-pitch-accent
 
-Standalone pitch-accent lookup and HTML formatting extracted from 10ten Japanese Reader.
+Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
-The package ships a generated JSON dataset derived from 10ten snapshot data and exposes a synchronous lookup API:
+The package ships a generated JSON dataset derived from 10ten snapshot data and exposes a lookup API:
 
 ```ts
 import { formatPitchAccentHtml, getPitchAccent } from 'get-pitch-accent';
@@ -21,6 +21,13 @@ type PitchAccentMatch = {
   spellings: string[];
 };
 ```
+
+`accent` is the pitch-accent downstep position counted in mora:
+
+- `0` means heiban.
+- `1` means atamadaka.
+- `2` or greater means the pitch drops after that mora.
+- If `accent === mora count`, the pattern is odaka.
 
 `formatPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
