@@ -2,7 +2,7 @@
 
 Standalone pitch-accent lookup and HTML formatting extracted from 10ten Japanese Reader.
 
-The package ships a generated JSON dataset derived from 10ten's GPL-licensed word data and exposes a synchronous lookup API:
+The package ships a generated JSON dataset derived from 10ten snapshot data and exposes a synchronous lookup API:
 
 ```ts
 import { formatPitchAccentHtml, getPitchAccent } from 'get-pitch-accent';
@@ -36,6 +36,12 @@ pnpm run build-data
 ```
 
 By default that reads from the vendored 10ten submodule at `vendor/10ten-ja-reader/data/words.ljson`, but you can also pass an explicit source path and output directory to `scripts/build-dataset.ts`.
+
+## Licensing
+
+The package code is GPL-3.0-only.
+
+The bundled generated dataset also carries upstream attribution/licence notices from the data sources used by 10ten, including JMdict/EDICT and pitch-accent data attributed by 10ten to Uros Ozvatic/Kanjium. See [NOTICE](/Users/primary/src/get-pitch-accent/NOTICE).
 
 ## Browser use
 

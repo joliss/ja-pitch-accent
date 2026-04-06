@@ -33,6 +33,7 @@
     "data",
     "dist",
     "LICENSE",
+    "NOTICE",
     "README.md"
   ],
   "devDependencies": {

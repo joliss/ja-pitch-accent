@@ -1,0 +1,62 @@
+get-pitch-accent
+Copyright (C) 2026 Jo Liss
+
+Code licence
+============
+
+The code in this package is distributed under the GNU General Public License,
+version 3 only. See LICENSE.
+
+This package is derived in part from 10ten Japanese Reader:
+https://github.com/birchill/10ten-ja-reader
+
+10ten Japanese Reader is licensed under GPL-3.0-or-later.
+
+
+Bundled data notices
+====================
+
+This package bundles generated dictionary/pitch-accent data derived from 10ten
+Japanese Reader snapshot data.
+
+The underlying word dictionary data includes data from JMdict/EDICT.
+
+As stated by 10ten Japanese Reader:
+
+  "This data is the property of the Electronic Dictionary Research and
+  Development Group, and is used in conformance with the Group's licence."
+
+Relevant links:
+
+- JMdict/EDICT project:
+  https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
+- EDRDG licence:
+  https://www.edrdg.org/edrdg/licence.html
+
+
+Pitch accent attribution
+========================
+
+As stated by 10ten Japanese Reader:
+
+  "The pitch accent data was provided by Uros Ozvatic through his free
+  database."
+
+Relevant link:
+
+- Kanjium:
+  https://github.com/mifunetoshiro/kanjium
+
+
+Generation pipeline
+===================
+
+The generated dataset in data/pitch-accent.json is produced by
+scripts/build-dataset.ts from:
+
+- vendor/10ten-ja-reader/data/words.ljson
+
+That snapshot is itself generated upstream by 10ten Japanese Reader from data
+downloaded from:
+
+- https://data.10ten.life
