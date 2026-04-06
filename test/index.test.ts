@@ -56,3 +56,13 @@ test('formats binary pitch accent html and delegates character rendering', () =>
   assert.match(html, /border-top-width:1\.5px;border-right-width:1\.5px/);
   assert.match(html, /<b data-index="0">し<\/b>/);
 });
+
+test('formats default binary pitch accent html verbatim', () => {
+  assert.equal(
+    formatPitchAccentHtml({
+      accent: 2,
+      reading: 'しめる',
+    }),
+    '<span style="display:inline-block;margin-bottom:0.25rem;"><span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;border-right-width:1.5px;">し</span><span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;border-top-width:1.5px;border-right-width:1.5px;">め</span><span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;border-bottom-width:1.5px;">る</span></span>'
+  );
+});
