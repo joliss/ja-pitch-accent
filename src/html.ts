@@ -24,7 +24,7 @@ function renderSegment(
   renderCharacter: CharacterRenderer,
   extraStyle: string
 ): string {
-  return `<span style="margin:0;font-size:90%;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter)}</span>`;
+  return `<span style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter)}</span>`;
 }
 
 export function formatJaPitchAccentHtml(
