@@ -8,7 +8,7 @@
     ".": "./dist/src/index.js"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -R data dist/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp -R data dist/ && chmod 755 dist/bin/cli.js",
     "build-data": "node --experimental-strip-types scripts/build-dataset.ts",
     "main": "node --experimental-strip-types bin/cli.ts",
     "prepack": "pnpm run build",
@@ -38,7 +38,6 @@
   ],
   "devDependencies": {
     "@types/node": "^25.5.2",
-    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }

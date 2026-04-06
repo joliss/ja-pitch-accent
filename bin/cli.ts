@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+#!/usr/bin/env node
 
 import { formatJaPitchAccentHtml, getJaPitchAccent } from '../src/index.ts';
 

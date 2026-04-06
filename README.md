@@ -2,7 +2,35 @@
 
 Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
 
-The package ships a generated JSON dataset derived from 10ten snapshot data and exposes a lookup API:
+Completely vibe-coded. Use at your own discretion!
+
+## CLI
+
+```sh
+npx ja-pitch-accent <spelling> [reading] [--html]
+```
+
+For example, to get a JSON array (see below), run:
+
+```sh
+npx ja-pitch-accent 閉める
+```
+
+To print HTML instead:
+
+```sh
+npx ja-pitch-accent 閉める --html
+```
+
+## JavaScript API
+
+### Installation
+
+```bash
+npm install --save ja-pitch-accent
+```
+
+### Usage
 
 ```ts
 import { formatJaPitchAccentHtml, getJaPitchAccent } from 'ja-pitch-accent';
@@ -31,7 +59,13 @@ The first match is usually the best. `accent` is the pitch-accent downstep posit
 
 `formatJaPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
-## Data
+### Browser use
+
+This package can be used in the browser as-is. However, your bundle size will be several megabytes, as the entire dataset JSON is included.
+
+## Contributing
+
+### Data
 
 To rebuild the dataset from 10ten, run:
 
@@ -47,9 +81,3 @@ By default that reads from the vendored 10ten submodule at `vendor/10ten-ja-read
 The package code is GPL-3.0-only.
 
 The bundled generated dataset also carries upstream attribution/licence notices from the data sources used by 10ten, including JMdict/EDICT and pitch-accent data attributed by 10ten to Uros Ozvatic/Kanjium. See [NOTICE](/Users/primary/src/get-pitch-accent/NOTICE).
-
-## Browser use
-
-The runtime imports the full generated JSON dataset directly, so it can be bundled for browser use.
-
-That also means bundle size will be large. The generated JSON is intentionally included whole rather than fetched lazily, so expect several megabytes of extra bundle weight and parse cost at startup.
