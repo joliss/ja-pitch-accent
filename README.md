@@ -67,6 +67,14 @@ type JaPitchAccentMatch = {
 
 `formatJaPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
+CSS variables:
+
+- `--ja-pitch-accent-border-color`
+- `--ja-pitch-accent-border-style`
+- `--ja-pitch-accent-border-width`
+- `--ja-pitch-accent-display`
+- `--ja-pitch-accent-margin-bottom`
+
 ### Browser use
 
 This package can be used in the browser as-is. However, your bundle size will be several megabytes, as the entire dataset JSON is included.
