@@ -4,7 +4,7 @@ import type { CharacterRenderer, JaPitchAccentMatch } from "./types.ts";
 const WRAPPER_CLASS_NAME = "ja-pitch-accent";
 const SEGMENT_CLASS_NAME = "ja-pitch-accent-segment";
 const BORDER_WIDTH_VARIABLE_NAME = "--ja-pitch-accent-border-width";
-const DEFAULT_BORDER_WIDTH = "2px"; // 10ten uptream uses 1.5px, but it causes missing borders on iOS WebKit
+const BORDER_WIDTH = `var(${BORDER_WIDTH_VARIABLE_NAME}, 1.5px)`;
 
 function escapeHtml(text: string): string {
   return text
@@ -48,26 +48,26 @@ export function formatJaPitchAccentHtml(
       accent === 1
         ? {
             modifierClassName: "ja-pitch-accent-segment-top-right",
-            style: `border-top-width:var(${BORDER_WIDTH_VARIABLE_NAME});border-right-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+            style: `border-top-width:${BORDER_WIDTH};border-right-width:${BORDER_WIDTH};`,
           }
         : moraCount > 1
           ? {
               modifierClassName: "ja-pitch-accent-segment-bottom-right",
-              style: `border-bottom-width:var(${BORDER_WIDTH_VARIABLE_NAME});border-right-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+              style: `border-bottom-width:${BORDER_WIDTH};border-right-width:${BORDER_WIDTH};`,
             }
           : {
               modifierClassName: "ja-pitch-accent-segment-top",
-              style: `border-top-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+              style: `border-top-width:${BORDER_WIDTH};`,
             };
     const remainderSegment =
       accent === 1
         ? {
             modifierClassName: "ja-pitch-accent-segment-bottom",
-            style: `border-bottom-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+            style: `border-bottom-width:${BORDER_WIDTH};`,
           }
         : {
             modifierClassName: "ja-pitch-accent-segment-top",
-            style: `border-top-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+            style: `border-top-width:${BORDER_WIDTH};`,
           };
 
     const parts = [
@@ -84,18 +84,18 @@ export function formatJaPitchAccentHtml(
       );
     }
 
-    return `<span class="${WRAPPER_CLASS_NAME}" style="${BORDER_WIDTH_VARIABLE_NAME}:${DEFAULT_BORDER_WIDTH};display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
+    return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
   }
 
   const parts = [
     renderIndexedSegment(
       moraSubstring(match.reading, 0, 1),
-      `border-bottom-width:var(${BORDER_WIDTH_VARIABLE_NAME});border-right-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+      `border-bottom-width:${BORDER_WIDTH};border-right-width:${BORDER_WIDTH};`,
       "ja-pitch-accent-segment-bottom-right",
     ),
     renderIndexedSegment(
       moraSubstring(match.reading, 1, accent),
-      `border-top-width:var(${BORDER_WIDTH_VARIABLE_NAME});border-right-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+      `border-top-width:${BORDER_WIDTH};border-right-width:${BORDER_WIDTH};`,
       "ja-pitch-accent-segment-top-right",
     ),
   ];
@@ -104,11 +104,11 @@ export function formatJaPitchAccentHtml(
     parts.push(
       renderIndexedSegment(
         moraSubstring(match.reading, accent),
-        `border-bottom-width:var(${BORDER_WIDTH_VARIABLE_NAME});`,
+        `border-bottom-width:${BORDER_WIDTH};`,
         "ja-pitch-accent-segment-bottom",
       ),
     );
   }
 
-  return `<span class="${WRAPPER_CLASS_NAME}" style="${BORDER_WIDTH_VARIABLE_NAME}:${DEFAULT_BORDER_WIDTH};display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
+  return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
 }
