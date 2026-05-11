@@ -3,8 +3,11 @@ import type { CharacterRenderer, JaPitchAccentMatch } from "./types.ts";
 
 const WRAPPER_CLASS_NAME = "ja-pitch-accent";
 const SEGMENT_CLASS_NAME = "ja-pitch-accent-segment";
-const BORDER_WIDTH_VARIABLE_NAME = "--ja-pitch-accent-border-width";
-const BORDER_WIDTH = `var(${BORDER_WIDTH_VARIABLE_NAME}, 1.5px)`;
+const BORDER_COLOR = "var(--ja-pitch-accent-border-color, currentColor)";
+const BORDER_STYLE = "var(--ja-pitch-accent-border-style, dotted)";
+const BORDER_WIDTH = "var(--ja-pitch-accent-border-width, 1.5px)";
+const DISPLAY = "var(--ja-pitch-accent-display, inline-block)";
+const MARGIN_BOTTOM = "var(--ja-pitch-accent-margin-bottom, 0.25rem)";
 
 function escapeHtml(text: string): string {
   return text
@@ -26,7 +29,7 @@ function renderSegment(
   extraStyle: string,
   modifierClassName: string,
 ): string {
-  return `<span class="${SEGMENT_CLASS_NAME} ${modifierClassName}" style="margin:0;border-style:dotted;border-color:currentColor;border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter, startIndex)}</span>`;
+  return `<span class="${SEGMENT_CLASS_NAME} ${modifierClassName}" style="margin:0;border-style:${BORDER_STYLE};border-color:${BORDER_COLOR};border-width:0;${extraStyle}">${renderCharacters(text, renderCharacter, startIndex)}</span>`;
 }
 
 export function formatJaPitchAccentHtml(
@@ -84,7 +87,7 @@ export function formatJaPitchAccentHtml(
       );
     }
 
-    return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
+    return `<span class="${WRAPPER_CLASS_NAME}" style="display:${DISPLAY};margin-bottom:${MARGIN_BOTTOM};">${parts.join("")}</span>`;
   }
 
   const parts = [
@@ -110,5 +113,5 @@ export function formatJaPitchAccentHtml(
     );
   }
 
-  return `<span class="${WRAPPER_CLASS_NAME}" style="display:inline-block;margin-bottom:0.25rem;">${parts.join("")}</span>`;
+  return `<span class="${WRAPPER_CLASS_NAME}" style="display:${DISPLAY};margin-bottom:${MARGIN_BOTTOM};">${parts.join("")}</span>`;
 }
