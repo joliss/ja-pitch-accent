@@ -67,13 +67,17 @@ type JaPitchAccentMatch = {
 
 `formatJaPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
-CSS variables:
+You can change the styling by setting any of the following CSS variables (defaults shown):
 
-- `--ja-pitch-accent-border-color`
-- `--ja-pitch-accent-border-style`
-- `--ja-pitch-accent-border-width`
-- `--ja-pitch-accent-display`
-- `--ja-pitch-accent-margin-bottom`
+```css
+.ja-pitch-accent {
+  --ja-pitch-accent-border-color: currentColor;
+  --ja-pitch-accent-border-style: dotted;
+  --ja-pitch-accent-border-width: 1.5px;
+  --ja-pitch-accent-display: inline-block;
+  --ja-pitch-accent-margin-bottom: 0.25rem;
+}
+```
 
 ### Browser use
 
