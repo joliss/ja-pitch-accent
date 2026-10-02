@@ -65,6 +65,10 @@ type JaPitchAccentMatch = {
 - `2` or greater means the pitch drops after that mora.
 - If `accent === mora count`, the pattern is odaka.
 
+Some readings have more than one accent. Each accent is returned as a separate match with the same `reading`, in dictionary order. For example, `getJaPitchAccent('立ち上がる')` returns two matches for たちあがる, with `accent` values `0` and `4`.
+
+`partOfSpeech` is empty unless an accent applies only to certain parts of speech. For example, `getJaPitchAccent('かちかち')` includes one match for the reading かちかち with `accent: 0` and `partOfSpeech: ['adj-na']`, and another with `accent: 1` and `partOfSpeech: ['adv', 'n']`.
+
 `formatJaPitchAccentHtml(match, renderCharacter?)` renders the same binary pitch-accent outline style used by 10ten. The optional `renderCharacter(character, index)` callback can return custom HTML for each kana character.
 
 You can change the styling by setting any of the following CSS variables (defaults shown):
