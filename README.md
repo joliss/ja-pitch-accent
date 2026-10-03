@@ -1,14 +1,34 @@
 # ja-pitch-accent
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/example-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="docs/example-light.png">
-  <img src="docs/example-light.png" alt="HTML rendering example" width="200">
-</picture>
-
-Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/).
+Standalone pitch-accent lookup and HTML formatting extracted from [10ten Japanese Reader](https://10ten.life/en/), with furigana support added.
 
 Completely vibe-coded. Use at your own discretion!
+
+## Examples
+
+Basic binary pitch:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/example-binary-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/example-binary-light.png">
+  <img src="docs/example-binary-light.png" alt="こんにちは with binary pitch-accent outline" width="200">
+</picture>
+
+Furigana with downstep notation:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/example-furigana-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/example-furigana-light.png">
+  <img src="docs/example-furigana-light.png" alt="振り仮名 with furigana and a downstep mark" width="155">
+</picture>
+
+Furigana with downstep notation (more than one possible accent):
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/example-furigana-multiple-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/example-furigana-multiple-light.png">
+  <img src="docs/example-furigana-multiple-light.png" alt="振り仮名 with furigana, a heiban line, and a downstep mark" width="159">
+</picture>
 
 ## CLI
 
