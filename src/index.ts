@@ -5,6 +5,5 @@ export type {
   AccentPattern,
   CharacterRenderer,
   FuriganaHtmlOptions,
-  FuriganaSegment,
   JaPitchAccentMatch,
 } from './types.ts';

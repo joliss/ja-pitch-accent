@@ -110,7 +110,7 @@ const accents = getJaPitchAccent('取り消す', 'とりけす').map((match) => 
 const html = formatJaPitchAccentFuriganaHtml('取[と]り 消[け]す', accents);
 ```
 
-`word` is Anki-style furigana (with a space before a kanji that follows kana) or an array of `{ base, reading? }` segments. Kana-only words such as `'しめる'` are drawn without furigana. Pass `{ color: false }` to draw the marks in the text color, or `{ rtScale }` (default `0.5`) to change the furigana size. The marks take no layout space, so leave room above the text, for example with a larger `line-height`.
+`word` is Anki-style furigana, with a space before a kanji that follows kana. Kana-only words such as `'しめる'` are drawn without furigana. Pass `{ color: false }` to draw the marks in the text color, or `{ rtScale }` (default `0.5`) to change the furigana size. The marks take no layout space, so leave room above the text, for example with a larger `line-height`.
 
 CSS variables (defaults shown):
 

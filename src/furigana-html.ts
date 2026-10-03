@@ -1,8 +1,13 @@
 import { escapeHtml } from "./html.ts";
 import { countMora, moraSubstring } from "./normal-jp.ts";
-import type { FuriganaHtmlOptions, FuriganaSegment } from "./types.ts";
+import type { FuriganaHtmlOptions } from "./types.ts";
 
 type AccentKind = "heiban" | "atamadaka" | "nakadaka" | "odaka";
+
+interface FuriganaSegment {
+  base: string;
+  reading?: string;
+}
 
 // A line over the mora range from..to (inclusive), plus a drop tick at the right edge of mora `tick` (-1 for none).
 interface Mark {
@@ -114,12 +119,12 @@ function renderMarks(marks: Array<Mark>, moraIndex: number, color: boolean, font
 }
 
 export function formatJaPitchAccentFuriganaHtml(
-  word: string | Array<FuriganaSegment>,
+  word: string,
   accents: number | Array<number>,
   options: FuriganaHtmlOptions = {},
 ): string {
   const { color = true, rtScale = 0.5 } = options;
-  const segments = typeof word === "string" ? parseFurigana(word) : word;
+  const segments = parseFurigana(word);
   if (segments.length === 0) throw new Error("Empty word");
   for (const segment of segments) {
     if (segment.reading !== undefined && !KANA_RE.test(segment.reading)) {

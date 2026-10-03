@@ -53,11 +53,7 @@ test('keeps small kana in the same mora', () => {
   assert.match(html, />きょ</);
 });
 
-test('supports segments and options', () => {
-  assert.equal(
-    formatJaPitchAccentFuriganaHtml([{ base: '箸', reading: 'はし' }], 1),
-    formatJaPitchAccentFuriganaHtml('箸[はし]', 1)
-  );
+test('supports options', () => {
   const monochrome = formatJaPitchAccentFuriganaHtml('箸[はし]', 1, { color: false });
   assert.match(monochrome, /solid currentColor;/);
   assert.doesNotMatch(monochrome, /-color, /);
