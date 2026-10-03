@@ -13,3 +13,13 @@ export interface JaPitchAccentMatch {
 export interface CharacterRenderer {
   (character: string, index: number): string;
 }
+
+export interface FuriganaSegment {
+  base: string;
+  reading?: string;
+}
+
+export interface FuriganaHtmlOptions {
+  color?: boolean;
+  rtScale?: number;
+}

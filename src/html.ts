@@ -9,7 +9,7 @@ const BORDER_WIDTH = "var(--ja-pitch-accent-border-width, 1.5px)";
 const DISPLAY = "var(--ja-pitch-accent-display, inline-block)";
 const MARGIN_BOTTOM = "var(--ja-pitch-accent-margin-bottom, 0.25rem)";
 
-function escapeHtml(text: string): string {
+export function escapeHtml(text: string): string {
   return text
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")

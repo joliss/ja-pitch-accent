@@ -83,6 +83,31 @@ You can change the styling by setting any of the following CSS variables (defaul
 }
 ```
 
+`formatJaPitchAccentFuriganaHtml(word, accents, options?)` renders a word with furigana and colored pitch-accent marks above it. It can show several accents at once. The first is drawn slightly thicker.
+
+```ts
+const accents = getJaPitchAccent('取り消す', 'とりけす').map((match) => match.accent);
+const html = formatJaPitchAccentFuriganaHtml('取[と]り 消[け]す', accents);
+```
+
+`word` is Anki-style furigana (with a space before a kanji that follows kana) or an array of `{ base, reading? }` segments. Kana-only words such as `'しめる'` are drawn without furigana. Pass `{ color: false }` to draw the marks in the text color, or `{ rtScale }` (default `0.5`) to change the furigana size. The marks take no layout space, so leave room above the text, for example with a larger `line-height`.
+
+CSS variables (defaults shown):
+
+```css
+.ja-pitch-accent-furigana {
+  --ja-pitch-accent-furigana-heiban-color: #378ADD;
+  --ja-pitch-accent-furigana-atamadaka-color: #E24B4A;
+  --ja-pitch-accent-furigana-nakadaka-color: #BA7E17;
+  --ja-pitch-accent-furigana-odaka-color: #639922;
+  --ja-pitch-accent-furigana-offset: 0.1em;
+  --ja-pitch-accent-furigana-gap: 0.2em;
+  --ja-pitch-accent-furigana-stroke: max(2px, 0.06em);
+  --ja-pitch-accent-furigana-stroke-alt: max(1.5px, 0.045em);
+  --ja-pitch-accent-furigana-inset: max(3px, 0.075em);
+}
+```
+
 ### Browser use
 
 This package can be used in the browser as-is. However, your bundle size will be several megabytes, as the entire dataset JSON is included.
