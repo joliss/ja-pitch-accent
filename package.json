@@ -1,6 +1,6 @@
 {
   "name": "ja-pitch-accent",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Pitch accent lookup and HTML formatting extracted from 10ten Japanese Reader, with furigana support added",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
