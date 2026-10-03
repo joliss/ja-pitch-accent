@@ -22,7 +22,7 @@ test('formats a word with furigana verbatim', () => {
 test('gives kana segments an empty <rt> and draws heiban over every mora', () => {
   const html = formatJaPitchAccentFuriganaHtml('取[と]り 消[け]す', 0);
   assert.equal(count(html, '<ruby>'), 4);
-  assert.match(html, /<ruby>り<rt style="[^"]*" aria-hidden="true"><span style="[^"]*width:2em;[^"]*"><i /);
+  assert.match(html, /<ruby><span style="position:relative;">り<\/span><rt style="[^"]*" aria-hidden="true"><span style="[^"]*width:2em;[^"]*"><i /);
   assert.equal(count(html, 'border-top:'), 4);
   assert.equal(count(html, 'border-right:'), 0);
 });
@@ -45,6 +45,33 @@ test('puts drops on level 0 and heiban above them, with an inset where drops tou
   // Only the first accent's rail and tick use the primary stroke
   assert.equal(count(html, 'solid var(--ja-pitch-accent-furigana-nakadaka-color, #BA7E17)'), 4);
   assert.equal(count(html, 'var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid'), 2);
+});
+
+test('puts drops on the base kana when no drop is over furigana', () => {
+  const clearance = 'var(--ja-pitch-accent-furigana-clearance, 0.15em)';
+  const html = formatJaPitchAccentFuriganaHtml('正[ただ]しい', 3);
+  assert.equal(count(html, 'font-size:200%;'), 0);
+  // The stub keeps clear of だ on its left, and the tick needs no clearance next to い
+  assert.equal(count(html, `">し<i style="position:absolute;pointer-events:none;left:${clearance};right:0;`), 1);
+  assert.equal(count(html, 'right:0;bottom:100%;'), 1);
+
+  // Heiban stays on the furigana, and doesn't move up, as the drop is drawn lower
+  const withHeiban = formatJaPitchAccentFuriganaHtml('正[ただ]しい', [3, 0]);
+  assert.equal(count(withHeiban, 'font-size:200%;'), 4);
+  assert.equal(count(withHeiban, 'furigana-gap'), 0);
+  assert.equal(count(withHeiban, '<span style="position:relative;">し<i '), 1);
+
+  // The tick keeps clear of き on its right
+  const beforeFurigana = formatJaPitchAccentFuriganaHtml('お 客[きゃく]', 1);
+  assert.equal(count(beforeFurigana, `left:0;right:${clearance};`), 1);
+  assert.equal(count(beforeFurigana, `right:${clearance};bottom:100%;`), 1);
+});
+
+test('keeps all drops on the furigana when one of them is over furigana', () => {
+  const html = formatJaPitchAccentFuriganaHtml('正[ただ]しい', [2, 3]);
+  assert.equal(count(html, 'font-size:200%;'), 4);
+  assert.equal(count(html, '<span style="position:relative;">し</span>'), 1);
+  assert.equal(count(html, 'furigana-clearance'), 0);
 });
 
 test('keeps small kana in the same mora', () => {

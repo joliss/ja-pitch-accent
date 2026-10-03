@@ -125,6 +125,7 @@ CSS variables (defaults shown):
   --ja-pitch-accent-furigana-stroke: max(2px, 0.06em);
   --ja-pitch-accent-furigana-stroke-alt: max(1.5px, 0.045em);
   --ja-pitch-accent-furigana-inset: max(3px, 0.075em);
+  --ja-pitch-accent-furigana-clearance: 0.15em;
 }
 ```
 
