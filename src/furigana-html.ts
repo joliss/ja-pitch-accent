@@ -179,16 +179,19 @@ export function formatJaPitchAccentFuriganaHtml(
   const marks = planMarks(hasFurigana, uniqueAccents);
   const baseMarks = marks.filter((mark) => mark.onBase);
   const rtMarks = marks.filter((mark) => !mark.onBase);
-  const renderBaseMora = (mora: string, index: number) =>
-    `<span style="position:relative;">${escapeHtml(mora)}${renderMarks(baseMarks, hasFurigana, index, color, "")}</span>`;
+  const renderBaseMora = (mora: string, index: number, style = "") =>
+    `<span style="position:relative;${style}">${escapeHtml(mora)}${renderMarks(baseMarks, hasFurigana, index, color, "")}</span>`;
   const open = `<span class="${WRAPPER_CLASS_NAME}" data-accents="${uniqueAccents.join(",")}">`;
   let moraIndex = 0;
   let html = "";
 
-  // Without kanji, the marks sit directly on the kana, and there is no <ruby>.
+  // Without kanji, the marks sit directly on the kana, and there is no <ruby>. Each mora is an inline-block with
+  // line-height 1, like the furigana's boxes below, so that the marks sit at the same height above the kana in any
+  // font. An inline box would reach up to the font's ascent, which in some fonts is well above the kana (1.16em in
+  // Noto Sans JP, whose kana reach about 0.8em).
   if (segments.every((segment) => segment.reading === undefined)) {
     for (const mora of splitMora(segments.map((segment) => segment.base).join(""))) {
-      html += renderBaseMora(mora, moraIndex++);
+      html += renderBaseMora(mora, moraIndex++, "display:inline-block;line-height:1;");
     }
     return `${open}${html}</span>`;
   }
