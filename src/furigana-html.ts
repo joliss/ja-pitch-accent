@@ -169,7 +169,6 @@ export function formatJaPitchAccentFuriganaHtml(
   );
   const moraCount = hasFurigana.length;
   const uniqueAccents = [...new Set(typeof accents === "number" ? [accents] : accents)];
-  if (uniqueAccents.length === 0) throw new Error("At least one accent is required");
   for (const accent of uniqueAccents) {
     if (!Number.isInteger(accent) || accent < 0 || accent > moraCount) {
       throw new Error(`Accent ${accent} is out of range 0..${moraCount}`);

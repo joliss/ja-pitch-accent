@@ -74,6 +74,14 @@ test('keeps all drops on the furigana when one of them is over furigana', () => 
   assert.equal(count(html, 'furigana-clearance'), 0);
 });
 
+test('draws no marks without accents', () => {
+  assert.equal(
+    formatJaPitchAccentFuriganaHtml('日[ひ]', []),
+    '<span class="ja-pitch-accent-furigana" data-accents=""><ruby>日<rt style="font-size:50%;line-height:1;user-select:none;-webkit-user-select:none;"><span style="display:inline-block;vertical-align:text-bottom;position:relative;width:2em;height:1em;line-height:1em;text-align:center;">ひ</span></rt></ruby></span>',
+  );
+  assert.doesNotMatch(formatJaPitchAccentFuriganaHtml('はし', []), /<i /);
+});
+
 test('keeps small kana in the same mora', () => {
   const html = formatJaPitchAccentFuriganaHtml('東京[とうきょう]', 0);
   assert.equal(count(html, 'display:inline-block;'), 4);
@@ -93,7 +101,6 @@ test('supports options', () => {
 
 test('throws on invalid input', () => {
   assert.throws(() => formatJaPitchAccentFuriganaHtml('箸[はし]', 3), /out of range/);
-  assert.throws(() => formatJaPitchAccentFuriganaHtml('箸[はし]', []), /At least one accent/);
   assert.throws(() => formatJaPitchAccentFuriganaHtml('箸', 1), /needs a reading/);
   assert.throws(() => formatJaPitchAccentFuriganaHtml('箸[hashi]', 1), /must be kana/);
   assert.throws(() => formatJaPitchAccentFuriganaHtml('客[きゃく', 1), /closing/);
