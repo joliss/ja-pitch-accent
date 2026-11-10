@@ -114,6 +114,11 @@ function planMarks(hasFurigana: Array<boolean>, accents: Array<number>): Array<M
 // Marks are absolutely positioned against their mora's box and take no layout space. Their font size is reset to the
 // word's font size (from the smaller furigana size inside <rt>), so that em lengths always refer to the word. Marks on
 // the base text sit at the same height as the furigana next to them, so their ends keep clear of it.
+//
+// Marks are <span>s so that 10ten Japanese Reader looks up the whole word. It ends the text under the cursor at an
+// element whose computed display isn't inline, which an absolutely positioned element's never is (it is block), unless
+// the element is a <span> or its parent is an inline-block. With <i> marks on the base kana of a word with kanji, it
+// only read 正し in 正しい (accent 3).
 function renderMarks(
   marks: Array<Mark>,
   hasFurigana: Array<boolean>,
@@ -139,10 +144,10 @@ function renderMarks(
         );
       const left = moraIndex === mark.from && clearLeft ? CLEARANCE : inset ? INSET : 0;
       const right = moraIndex === mark.to && clearRight ? CLEARANCE : 0;
-      html += `<i style="${style}left:${left};right:${right};bottom:calc(100% + ${height});height:0;border-top:${border};"></i>`;
+      html += `<span style="${style}left:${left};right:${right};bottom:calc(100% + ${height});height:0;border-top:${border};"></span>`;
     }
     if (mark.tick === moraIndex) {
-      html += `<i style="${style}right:${clearRight ? CLEARANCE : 0};bottom:100%;width:0;height:calc(${height} + ${strokeWidth});border-right:${border};"></i>`;
+      html += `<span style="${style}right:${clearRight ? CLEARANCE : 0};bottom:100%;width:0;height:calc(${height} + ${strokeWidth});border-right:${border};"></span>`;
     }
   }
   return html;

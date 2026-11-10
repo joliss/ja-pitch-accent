@@ -8,21 +8,21 @@ const count = (html: string, text: string) => html.split(text).length - 1;
 test('formats a kana-only word verbatim', () => {
   assert.equal(
     formatJaPitchAccentFuriganaHtml('はし', [1, 0]),
-    '<span class="ja-pitch-accent-furigana" data-accents="1,0"><span style="position:relative;display:inline-block;line-height:1;">は<i style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-atamadaka-color, #E24B4A);"></i><i style="position:absolute;pointer-events:none;right:0;bottom:100%;width:0;height:calc(var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)));border-right:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-atamadaka-color, #E24B4A);"></i><i style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-gap, 0.2em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke-alt, max(1.5px, 0.045em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></i></span><span style="position:relative;display:inline-block;line-height:1;">し<i style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-gap, 0.2em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke-alt, max(1.5px, 0.045em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></i></span></span>'
+    '<span class="ja-pitch-accent-furigana" data-accents="1,0"><span style="position:relative;display:inline-block;line-height:1;">は<span style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-atamadaka-color, #E24B4A);"></span><span style="position:absolute;pointer-events:none;right:0;bottom:100%;width:0;height:calc(var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)));border-right:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-atamadaka-color, #E24B4A);"></span><span style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-gap, 0.2em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke-alt, max(1.5px, 0.045em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></span></span><span style="position:relative;display:inline-block;line-height:1;">し<span style="position:absolute;pointer-events:none;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em) + var(--ja-pitch-accent-furigana-gap, 0.2em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke-alt, max(1.5px, 0.045em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></span></span></span>'
   );
 });
 
 test('formats a word with furigana verbatim', () => {
   assert.equal(
     formatJaPitchAccentFuriganaHtml('日[ひ]', 0),
-    '<span class="ja-pitch-accent-furigana" data-accents="0"><ruby>日<rt style="font-size:50%;line-height:1;user-select:none;-webkit-user-select:none;"><span style="display:inline-block;vertical-align:text-bottom;position:relative;width:2em;height:1em;line-height:1em;text-align:center;">ひ<i style="position:absolute;pointer-events:none;font-size:200%;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></i></span></rt></ruby></span>'
+    '<span class="ja-pitch-accent-furigana" data-accents="0"><ruby>日<rt style="font-size:50%;line-height:1;user-select:none;-webkit-user-select:none;"><span style="display:inline-block;vertical-align:text-bottom;position:relative;width:2em;height:1em;line-height:1em;text-align:center;">ひ<span style="position:absolute;pointer-events:none;font-size:200%;left:0;right:0;bottom:calc(100% + var(--ja-pitch-accent-furigana-offset, 0.1em));height:0;border-top:var(--ja-pitch-accent-furigana-stroke, max(2px, 0.06em)) solid var(--ja-pitch-accent-furigana-heiban-color, #378ADD);"></span></span></rt></ruby></span>'
   );
 });
 
 test('gives kana segments an empty <rt> and draws heiban over every mora', () => {
   const html = formatJaPitchAccentFuriganaHtml('取[と]り 消[け]す', 0);
   assert.equal(count(html, '<ruby>'), 4);
-  assert.match(html, /<ruby><span style="position:relative;">り<\/span><rt style="[^"]*" aria-hidden="true"><span style="[^"]*width:2em;[^"]*"><i /);
+  assert.match(html, /<ruby><span style="position:relative;">り<\/span><rt style="[^"]*" aria-hidden="true"><span style="[^"]*width:2em;[^"]*"><span /);
   assert.equal(count(html, 'border-top:'), 4);
   assert.equal(count(html, 'border-right:'), 0);
 });
@@ -52,14 +52,14 @@ test('puts drops on the base kana when no drop is over furigana', () => {
   const html = formatJaPitchAccentFuriganaHtml('正[ただ]しい', 3);
   assert.equal(count(html, 'font-size:200%;'), 0);
   // The stub keeps clear of だ on its left, and the tick needs no clearance next to い
-  assert.equal(count(html, `">し<i style="position:absolute;pointer-events:none;left:${clearance};right:0;`), 1);
+  assert.equal(count(html, `">し<span style="position:absolute;pointer-events:none;left:${clearance};right:0;`), 1);
   assert.equal(count(html, 'right:0;bottom:100%;'), 1);
 
   // Heiban stays on the furigana, and doesn't move up, as the drop is drawn lower
   const withHeiban = formatJaPitchAccentFuriganaHtml('正[ただ]しい', [3, 0]);
   assert.equal(count(withHeiban, 'font-size:200%;'), 4);
   assert.equal(count(withHeiban, 'furigana-gap'), 0);
-  assert.equal(count(withHeiban, '<span style="position:relative;">し<i '), 1);
+  assert.equal(count(withHeiban, '<span style="position:relative;">し<span '), 1);
 
   // The tick keeps clear of き on its right
   const beforeFurigana = formatJaPitchAccentFuriganaHtml('お 客[きゃく]', 1);
@@ -79,7 +79,25 @@ test('draws no marks without accents', () => {
     formatJaPitchAccentFuriganaHtml('日[ひ]', []),
     '<span class="ja-pitch-accent-furigana" data-accents=""><ruby>日<rt style="font-size:50%;line-height:1;user-select:none;-webkit-user-select:none;"><span style="display:inline-block;vertical-align:text-bottom;position:relative;width:2em;height:1em;line-height:1em;text-align:center;">ひ</span></rt></ruby></span>',
   );
-  assert.doesNotMatch(formatJaPitchAccentFuriganaHtml('はし', []), /<i /);
+  assert.doesNotMatch(formatJaPitchAccentFuriganaHtml('はし', []), /position:absolute/);
+});
+
+// 10ten Japanese Reader ends the text under the cursor at an absolutely positioned element, such as a mark, unless it
+// is a <span> or its parent is an inline-block (see renderMarks)
+test('only has elements that 10ten reads a word across', () => {
+  const words: Array<[string, Array<number>]> = [
+    ['はし', [1, 0]],
+    ['日[ひ]', [0]],
+    ['正[ただ]しい', [3]],
+    ['正[ただ]しい', [3, 0]],
+    ['タンパク 質[しつ]', [4, 3]],
+    ['お 客[きゃく]様[さま]', [4]],
+  ];
+  for (const [word, accents] of words) {
+    const html = formatJaPitchAccentFuriganaHtml(word, accents);
+    const tags = new Set(Array.from(html.matchAll(/<([a-z]+)/g), (match) => match[1]));
+    assert.deepEqual([...tags].filter((tag) => !['span', 'ruby', 'rt'].includes(tag!)), [], word);
+  }
 });
 
 test('keeps small kana in the same mora', () => {
